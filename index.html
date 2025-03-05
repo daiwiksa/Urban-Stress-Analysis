@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Stress in the UK</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        
+        header {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 1.5em;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+        }
+        
+        .card:hover {
+            transform: scale(1.05);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .card h2 {
+            padding: 15px;
+            background: #3498db;
+            color: white;
+            margin: 0;
+            font-size: 1.2em;
+        }
+        
+        footer {
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Urban Stress in the UK</h1>
+        <p>Explore key urban challenges in London, Manchester, and the Cotswolds.</p>
+    </header>
+    
+    <main>
+        <section class="cards">
+            <div class="card">
+                <a href="traffic.html">
+                    <h2>London: Traffic Congestion</h2>
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.MLtRfhWkv8BOmQboEfsJ6wHaFr&pid=Api" alt="London Traffic Congestion">
+                </a>
+            </div>
+            <div class="card">
+                <a href="housing.html">
+                    <h2>Manchester: Housing Crisis</h2>
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.q3HklRxNBxlh6dvaQO8r3gHaD4&pid=Api" alt="Manchester Housing Crisis">
+                </a>
+            </div>
+            <div class="card">
+                <a href="environment.html">
+                    <h2>Cotswolds: Environmental Stress</h2>
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.1U9kY7nYu64gLV8_DIEskAHaFc&pid=Api" alt="Cotswolds Environmental Stress">
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Urban Stress Analysis</p>
+    </footer>
+</body>
+</html>

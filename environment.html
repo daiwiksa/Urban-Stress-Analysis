@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotswolds: Environmental Stress</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #environmentMap {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .content-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .content-container .stat-box {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+        }
+        .popup-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .popup-content button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cotswolds: Environmental Stress</h1>
+        <p>Examining environmental degradation, land use changes, and conservation issues in the Cotswolds.</p>
+    </header>
+    
+    <main>
+        <a href="index.html" class="back-button">← Back to Home</a>
+
+        <section>
+            <h2>📍 Environmental Hotspots</h2>
+            <p>Click on a location to learn more about environmental concerns in the region.</p>
+            <div id="environmentMap"></div>
+            <div id="popup" class="popup-content">
+                <p id="popup-text"></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+            <script>
+                var environmentMap = L.map('environmentMap').setView([51.833, -1.843], 10);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(environmentMap);
+                
+                var environmentAreas = [
+                    { location: [51.883, -1.750], name: "River Windrush", info: "Pollution from nearby farms has affected water quality and fish populations." },
+                    { location: [51.725, -2.200], name: "Forest of Dean", info: "Deforestation is reducing biodiversity and increasing erosion risks." },
+                    { location: [51.765, -1.578], name: "Oxford Green Belt", info: "Urban expansion is reducing protected green spaces." }
+                ];
+                
+                function showPopup(text) {
+                    document.getElementById("popup-text").innerText = text;
+                    document.getElementById("popup").style.display = "block";
+                }
+                
+                function closePopup() {
+                    document.getElementById("popup").style.display = "none";
+                }
+                
+                environmentAreas.forEach(area => {
+                    L.marker(area.location).addTo(environmentMap)
+                        .bindPopup(`<b>${area.name}</b>`)
+                        .on('click', function() {
+                            showPopup(area.info);
+                        });
+                });
+            </script>
+        </section>
+        
+        <section>
+            <h2>🌱 Reasons for Environmental Stress</h2>
+            <div class="content-container">
+                <div class="stat-box">
+                    <h3>Over-Tourism</h3>
+                    <p>Visitor numbers have increased by 40% in the last decade, causing strain on natural reserves.</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Urban Sprawl</h3>
+                    <p>Housing developments have expanded by 25% into rural areas since 2010.</p>
+                </div>
+                <div class="stat-box">
+                    <h3>Intensive Farming</h3>
+                    <p>Soil erosion has increased by 30% due to intensified agricultural practices.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>📊 Environmental Impact Trends</h2>
+            <p>Data shows an increase in pollution levels and biodiversity loss over time.</p>
+            <canvas id="environmentChart" width="400" height="200"></canvas>
+            <script>
+                var ctx = document.getElementById('environmentChart').getContext('2d');
+                var environmentChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015', '2017', '2019', '2021', '2023'],
+                        datasets: [{
+                            label: 'Water Pollution Index',
+                            data: [40, 45, 50, 55, 60],
+                            borderColor: 'rgba(255, 99, 132, 0.7)',
+                            fill: false
+                        }, {
+                            label: 'Biodiversity Loss (%)',
+                            data: [5, 10, 15, 20, 25],
+                            borderColor: 'rgba(54, 162, 235, 0.7)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Urban Stress Analysis</p>
+    </footer>
+</body>
+</html>

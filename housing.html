@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manchester: Housing Crisis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #housingMap, #rentalMap, #homelessnessMap {
+            height: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .popup-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 1000;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .popup-content button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Manchester: Housing Crisis</h1>
+        <p>Analyzing the causes, effects, and data behind the housing crisis in Manchester.</p>
+    </header>
+    
+    <main>
+        <a href="index.html" class="back-button">← Back to Home</a>
+        <section>
+            <h2>🏠 Housing Shortage Hotspots</h2>
+            <p>Click on a location to learn more about housing affordability and shortages.</p>
+            <div id="housingMap"></div>
+            <div id="popup" class="popup-content">
+                <p id="popup-text"></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+            <script>
+                var housingMap = L.map('housingMap').setView([53.483959, -2.244644], 12);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(housingMap);
+                
+                var housingAreas = [
+                    { location: [53.4794, -2.2453], name: "Manchester City Centre", info: "Rapid gentrification and rising property prices have made it difficult for low-income residents to afford housing." },
+                    { location: [53.4608, -2.2381], name: "Hulme", info: "Previously redeveloped, Hulme still faces housing affordability issues due to increased demand." },
+                    { location: [53.5110, -2.2222], name: "Salford", info: "Salford has seen an influx of new developments, pricing out many locals." }
+                ];
+                
+                function showPopup(text) {
+                    document.getElementById("popup-text").innerText = text;
+                    document.getElementById("popup").style.display = "block";
+                }
+                
+                function closePopup() {
+                    document.getElementById("popup").style.display = "none";
+                }
+                
+                housingAreas.forEach(area => {
+                    L.marker(area.location).addTo(housingMap)
+                        .bindPopup(`<b>${area.name}</b>`)
+                        .on('click', function() {
+                            showPopup(area.info);
+                        });
+                });
+            </script>
+        </section>
+
+        <section>
+            <h2>📊 Housing Price Trends</h2>
+            <p>Manchester’s house prices have been rising rapidly due to increased demand and limited supply.</p>
+            <canvas id="housingChart" width="400" height="200"></canvas>
+            <script>
+                var ctx = document.getElementById('housingChart').getContext('2d');
+                var housingChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015', '2017', '2019', '2021', '2023'],
+                        datasets: [{
+                            label: 'Average House Price (£)',
+                            data: [150000, 175000, 200000, 225000, 250000],
+                            borderColor: 'rgba(54, 162, 235, 0.7)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+        
+        <section>
+            <h2>🏘️ Rental Market Trends</h2>
+            <p>The increasing rent prices in Manchester make it harder for residents to afford decent housing.</p>
+            <canvas id="rentalChart" width="400" height="200"></canvas>
+            <script>
+                var ctx2 = document.getElementById('rentalChart').getContext('2d');
+                var rentalChart = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2015', '2017', '2019', '2021', '2023'],
+                        datasets: [{
+                            label: 'Average Rent (£/month)',
+                            data: [600, 750, 900, 1050, 1200],
+                            backgroundColor: 'rgba(255, 159, 64, 0.7)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+        
+        <section>
+            <h2>🚨 Homelessness in Manchester</h2>
+            <p>The housing crisis has led to an increase in homelessness, as many cannot afford to rent or buy.</p>
+            <canvas id="homelessnessChart" width="400" height="200"></canvas>
+            <script>
+                var ctx3 = document.getElementById('homelessnessChart').getContext('2d');
+                var homelessnessChart = new Chart(ctx3, {
+                    type: 'line',
+                    data: {
+                        labels: ['2015', '2017', '2019', '2021', '2023'],
+                        datasets: [{
+                            label: 'Number of Homeless People',
+                            data: [1800, 2000, 2300, 2700, 3000],
+                            borderColor: 'rgba(255, 99, 132, 0.7)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Urban Stress Analysis</p>
+    </footer>
+</body>
+</html>
